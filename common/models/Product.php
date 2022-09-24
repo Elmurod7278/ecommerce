@@ -52,7 +52,7 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'price', 'image', 'status'], 'required'],
+            [['name', 'price', 'status'], 'required'],
             [['description'], 'string'],
             [['price'], 'number'],
             [['imageFile'], 'image', 'extensions' => 'jpg,png,jpeg,webp', 'maxSize' => 10 * 1024 * 1024],
@@ -158,6 +158,9 @@ class Product extends \yii\db\ActiveRecord
         return $ok;
     }
     public function getImageUrl(){
-        return Yii::$app->params['frontendUrl'].'/storage'.$this->image;
+        if($this->image){
+            return Yii::$app->params['frontendUrl'].'/storage'.$this->image;
+        }
+        return '/img/no_image.png';
     }
 }
